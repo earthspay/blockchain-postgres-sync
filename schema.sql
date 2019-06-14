@@ -74,7 +74,7 @@ END; $$;
 CREATE FUNCTION public.get_asset_id(text) RETURNS text
     LANGUAGE sql IMMUTABLE
     AS $_$
-    SELECT COALESCE($1, 'WAVES');
+    SELECT COALESCE($1, 'EARTHS');
 $_$;
 
 
@@ -637,8 +637,8 @@ begin
 		to_timestamp((t ->> 'timestamp') :: DOUBLE PRECISION / 1000),
 		(t->>'fee')::bigint,
 		(t->>'amount')::bigint,
-		coalesce(t->>'assetId', 'WAVES'),
-		coalesce(t->>'feeAsset', 'WAVES'),
+		coalesce(t->>'assetId', 'EARTHS'),
+		coalesce(t->>'feeAsset', 'EARTHS'),
 		t->>'sender',
 		t->>'senderPublicKey',
 		t->>'recipient',
@@ -1059,7 +1059,7 @@ CREATE VIEW public.asset_decimals AS
     txs_3.decimals
    FROM public.txs_3
 UNION ALL
- SELECT 'WAVES'::character varying AS asset_id,
+ SELECT 'EARTHS'::character varying AS asset_id,
     8 AS decimals;
 
 
@@ -1160,9 +1160,9 @@ CREATE VIEW public.assets AS
            FROM public.txs_14 txs_14_1
           ORDER BY txs_14_1.asset_id, txs_14_1.height DESC) txs_14 ON (((issue.asset_id)::text = (txs_14.asset_id)::text)))
 UNION ALL
- SELECT 'WAVES'::character varying AS asset_id,
-    'WAVES'::text AS ticker,
-    'Waves'::character varying AS asset_name,
+ SELECT 'EARTHS'::character varying AS asset_id,
+    'EARTHS'::text AS ticker,
+    'Earths'::character varying AS asset_name,
     ''::character varying AS description,
     ''::character varying AS sender,
     0 AS issue_height,
@@ -1257,7 +1257,7 @@ CREATE TABLE public.pairs (
     first_price numeric NOT NULL,
     last_price numeric NOT NULL,
     volume numeric NOT NULL,
-    volume_waves numeric,
+    volume_earths numeric,
     quote_volume numeric NOT NULL,
     high numeric NOT NULL,
     low numeric NOT NULL,
